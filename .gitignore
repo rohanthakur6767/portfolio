@@ -38,3 +38,6 @@ next-env.d.ts
 # editors
 .vscode/
 .idea/
+
+# claude code local dev config
+.claude/
