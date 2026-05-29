@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(test -f \"D:\\\\image2.jpg\" && echo \"FOUND\" && cp \"D:\\\\image2.jpg\" \"D:\\\\Portfolio\\\\public\\\\profile.jpg\" && echo \"COPIED to public/profile.jpg\" || echo \"FILE NOT FOUND at D:\\\\image2.jpg\")"
+    ]
+  }
+}
