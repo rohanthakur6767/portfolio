@@ -81,15 +81,22 @@ export async function POST(req: Request) {
       },
     });
 
-    const chat = model.startChat({
-      history: history
-        .slice(0, -1)
-        .filter((m) => m.role === "user" || m.role === "assistant")
-        .map((m) => ({
-          role: m.role === "assistant" ? "model" : "user",
-          parts: [{ text: m.content }],
-        })),
-    });
+    // Build Gemini history from prior turns (everything except the latest
+    // user message, which is sent via sendMessage below).
+    const mapped = history
+      .slice(0, -1)
+      .filter((m) => m.role === "user" || m.role === "assistant")
+      .map((m) => ({
+        role: m.role === "assistant" ? ("model" as const) : ("user" as const),
+        parts: [{ text: m.content }],
+      }));
+
+    // Gemini requires history to start with a 'user' turn. Drop any leading
+    // 'model' turns (e.g. the assistant's opening greeting).
+    const firstUser = mapped.findIndex((m) => m.role === "user");
+    const geminiHistory = firstUser === -1 ? [] : mapped.slice(firstUser);
+
+    const chat = model.startChat({ history: geminiHistory });
 
     const result = await chat.sendMessage(latest);
     const reply = result.response.text();
