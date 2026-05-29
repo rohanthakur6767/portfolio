@@ -97,7 +97,7 @@ export function ChatWidget() {
                 <div>
                   <div className="text-sm font-semibold">Portfolio Assistant</div>
                   <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                    Powered by Gemini 1.5 Flash
+                    Powered by Gemini 2.5 Flash
                   </div>
                 </div>
               </div>

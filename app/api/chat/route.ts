@@ -71,7 +71,9 @@ export async function POST(req: Request) {
 
     const genAI = new GoogleGenerativeAI(key);
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      // Override via GEMINI_MODEL env var. Default to a current stable Flash
+      // model — gemini-1.5-flash was retired by Google.
+      model: process.env.GEMINI_MODEL ?? "gemini-2.5-flash",
       systemInstruction: buildSystemInstruction(),
       generationConfig: {
         temperature: 0.6,
